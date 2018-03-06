@@ -110,50 +110,7 @@ export default class App extends React.Component {
   }
 }
 
-  // Ignore an idea
-  ignoreItem(data, secId, rowId, rowMap) {
-    // Slide the row back into place
-    rowMap[`${secId}${rowId}`].props.closeRow();
 
-    // Create a new array that has the idea removed
-    let newShoppingListData = this.state.shoppingList.slice();
-    newShoppingListData.splice(rowId, 1);
-
-    // Set state
-    this.setState({
-      shoppingList: newShoppingListData
-    });
-  }
-
-  // Delete an idea
-  deleteItem(data, secId, rowId, rowMap) {
-    // Slide the row back into place
-    rowMap[`${secId}${rowId}`].props.closeRow();
-
-    // Create a new array that has the idea removed
-    let newShoppingListData = this.state.shoppingList.slice();
-    newShoppingListData.splice(rowId, 1);
-
-    // Airtable API endpoint
-    let airtableUrl = "https://api.airtable.com/v0/appDRRHVEcAHs85Ok/shoppinglist/" + data.id;
-
-    // Needed for Airtable authorization
-    let requestOptions = {
-      method: 'DELETE',
-      headers: new Headers({
-        'Authorization': 'Bearer keyMNa19MeObxMQtm', // replace with your own API key
-        'Content-type': 'application/json'
-      })
-    };
-
-    // Form the request
-    let request = new Request(airtableUrl, requestOptions);
-
-    // Make the request
-    fetch(request).then(response => response.json()).then(json => {
-      this.getShoppingList(); // refresh the list when we're done
-    });
-  }
 
   // The UI for each row of data
   renderRow(data) {
